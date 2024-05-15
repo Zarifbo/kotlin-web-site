@@ -276,6 +276,29 @@ kapt.incremental.apt=false
 
 Note that incremental annotation processing requires [incremental compilation](gradle-compilation-and-caches.md#incremental-compilation)
 to be enabled as well.
+
+## Inherit annotation processors from super configurations
+
+From Kotlin 2.0.0, you can define a common set of annotation processors in a separate Gradle configuration as a 
+super configuration and extend it further in kapt-specific configurations for your subprojects.
+
+As an example, for a subproject using [Dagger](https://dagger.dev/), in your `build.gradle(.kts)` file, use the following configuration:
+
+```kotlin
+val commonAnnotationProcessors by configurations.creating
+configurations.named("kapt") { extendsFrom(commonAnnotationProcessors) }
+
+dependencies {
+    implementation("com.google.dagger:dagger:2.48.1")
+    commonAnnotationProcessors("com.google.dagger:dagger-compiler:2.48.1")
+}
+```
+
+In this example, the `commonAnnotationProcessors` Gradle configuration is your "common" super configuration for annotation processing
+that you want to be used for all your projects. You use the [`extendsFrom()`](https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.Configuration.html#org.gradle.api.artifacts.Configuration:extendsFrom)
+method to add `commonAnnotationProcessors` as a super configuration. kapt sees that the `commonAnnotationProcessors` 
+Gradle configuration has a dependency on the Dagger annotation processor and includes it in its configuration
+for annotation processing.
  
 ## Java compiler options
 

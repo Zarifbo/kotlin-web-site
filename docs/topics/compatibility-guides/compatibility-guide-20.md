@@ -142,20 +142,23 @@ perspective
 >
 > - 2.0.0: report a warning
 
-### Gradle dependency handling of CInteropProcess
+### Deprecate old ways of CInteropProcess handling
 
-> **Issue**: [KT-67226](https://youtrack.jetbrains.com/issue/KT-67226)
+> **Issue**: [KT-62795](https://youtrack.jetbrains.com/issue/KT-62795)
 >
 > **Component**: Gradle
 >
 > **Incompatible change type**: source
 >
-> **Short summary**:
+> **Short summary**: the `CInteropProcess` task and the `CInteropSettings` class now use the `definitionFile` property
+> instead of `defFile` and `defFileProperty`. This eliminates the need for additional dependencies when handling the
+> `defFile` property and ensures better task dependency management.
+> In Kotlin/Native projects, Gradle now lazily verifies the presence of the `definitionFile` property after the connected
+> task has run later in the build process.
 >
 > **Deprecation cycle**:
 >
-> - 1.6.20: report a warning
-> - 1.8.0: raise the warning to an error
+> - 2.0.0: `defFile` and `defFileProperty` parameters are deprecated
 
 ### Remove kotlin.useK2 Gradle property
 

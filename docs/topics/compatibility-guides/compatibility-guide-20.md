@@ -151,8 +151,11 @@ perspective
 > **Incompatible change type**: source
 >
 > **Short summary**: the `CInteropProcess` task and the `CInteropSettings` class now use the `definitionFile` property
-> instead of `defFile` and `defFileProperty`. This eliminates the need for additional dependencies when handling the
-> `defFile` property and ensures better task dependency management.
+> instead of `defFile` and `defFileProperty`.
+> 
+> This eliminates the need to add extra `dependsOn` relations between the `CInteropProcess` task and the task that
+> generates `defFile` when the `defFile` is dynamically generated.
+> 
 > In Kotlin/Native projects, Gradle now lazily verifies the presence of the `definitionFile` property after the connected
 > task has run later in the build process.
 >
